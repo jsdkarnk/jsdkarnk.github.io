@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.0.0/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyBI6Pz6c8u6eG6dKnOJetjb5JoEVP52bKw",
+            authDomain: "jsdkarnk-3ce9a.firebaseapp.com",
+            databaseURL: "https://jsdkarnk-3ce9a.firebaseio.com",
+            projectId: "jsdkarnk-3ce9a",
+            storageBucket: "jsdkarnk-3ce9a.appspot.com",
+            messagingSenderId: "696230168591"
+        };
+        firebase.initializeApp(config)
+
+        writeUserData("feelale", "none");
+
+        function writeUserData(userId, clipUrl) {
+            firebase.database().ref('users/' + userId).set({
+                id: userId,
+                Url: clipUrl
+            });
+        }
+
+        $(document).ready(function () {
+            $("#led-off").click(function () {
+                var name = $("#name_input").val();
+                var song = $("#song_input").val();
+                console.log(name);
+                if (name != "" && song != "") {
+                    console.log("click");
+                    writeUserData(name, song);
+                } else {
+                    alert("ใส่ชื่อให้ครบสิวะ!!!");
+                }
+
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <h1>YOUTUBE WebControl</h1>
+    <!-- <hr /> -->
+    <p>user:</p><input id="name_input">
+    <p>song:</p><input id="song_input">
+    <button id="led-off" enabled>Send</button>
+</body>
+
+</html>

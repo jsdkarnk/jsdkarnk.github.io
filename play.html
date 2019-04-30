@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Play Youtube</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="ytembed.js"></script>
+    <script src="firebase.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#led-off").click(function () {
+                var name = $("#name_input").val();
+                console.log(name);
+                if (name != "") {
+                    console.log("click");
+                    Data(name);
+                } else {
+                    alert("ใส่ชื่อตัวเองสิวะ!!!");
+                }
+
+            });
+
+            function Data(user) {
+                $("#led-off").prop('disabled', true);
+                var myFirebaseRef = new Firebase("https://jsdkarnk-3ce9a.firebaseio.com/users/" + user);
+                myFirebaseRef.on('child_changed', function (snapshot) {
+                    console.log(snapshot.val());
+                    document.getElementById("ytThumbsPlayer").innerHTML = "";
+                    var name_input = snapshot.val();
+                    if (name_input == "none") {
+
+                    } else {
+                        ytEmbed.init({
+                            'block': 'ytThumbsPlayer',
+                            'key': 'your-youtube-developer-key',
+                            'q': name_input,
+                            'type': 'search',
+                            'results': 1,
+                            'meta': false,
+                            'player': 'embed',
+                            'layout': 'thumbnails',
+                            'display_first': true,
+                            'parent': 'ytThumbs'
+                        });
+                    }
+
+                });
+                return false;
+            }
+
+        });
+    </script>
+
+</head>
+
+<body>
+    <h1>YOUTUBE WebPlay</h1>
+    <!-- <hr /> -->
+    <input id="name_input">
+    <button id="led-off" enabled>GO!</button>
+    <div id="ytThumbsPlayer"><ins>Made with the <a
+                href="https://yvoschaap.com/youtube.html?utm_source=generator">Youtube
+                Embed
+                Generator</a>.</ins></div>
+</body>
+
+</html>

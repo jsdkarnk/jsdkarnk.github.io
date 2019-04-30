@@ -18,7 +18,7 @@ var ytEmbed = {
     cl: 0,
     callback: {},
     cfg: {},
-    player: false,
+    player: true,
 
     /**
      * Main Init Method
@@ -513,6 +513,7 @@ var ytEmbed = {
     onPlayerReady: function (id) {
         event.target.setVolume(30);
         event.target.playVideo();
+        event.target.autoplay();
     },
 
     /**
